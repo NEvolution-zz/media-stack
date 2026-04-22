@@ -1,0 +1,27 @@
+services:
+  prowlarr:
+    container_name: prowlarr
+    image: lscr.io/linuxserver/prowlarr:latest
+    ports:
+      - 9696:9696
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Hong_Kong
+    volumes:
+      - ~/docker/config_files/prowlarr/config:/config
+      - ~/docker/config_files/prowlarr/custom:/config/Definitions/Custom
+    restart: unless-stopped
+    healthcheck:
+      # This checks if the web server is responding on port 9696
+      test: ["CMD", "curl", "-f", "http://localhost:9696/ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true

@@ -1,0 +1,19 @@
+services:
+  tautulli:
+    image: ghcr.io/tautulli/tautulli
+    container_name: tautulli
+    restart: unless-stopped
+    volumes:
+      - ~/docker/config_files/tautulli/config:/config
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Hong_Kong
+    ports:
+      - 8383:8181
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true

@@ -1,0 +1,31 @@
+services:
+  decypharr:
+    image: cy01/blackhole:latest
+    container_name: decypharr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Hong_Kong
+    ports:
+      - "8282:8282"
+    volumes:
+      - /mnt/:/mnt:rshared
+      - ~/docker/config_files/decypharr/config/:/app
+    restart: unless-stopped
+    devices:
+      - /dev/fuse:/dev/fuse:rwm
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - apparmor:unconfined
+    # healthcheck:
+    #   test: ["CMD", "/usr/bin/healthcheck", "--config", "/app/"]
+    #   interval: 10s
+    #   timeout: 10s
+    #   retries: 3
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true

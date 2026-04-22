@@ -1,0 +1,17 @@
+services:
+    profilarr:
+        image: santiagosayshey/profilarr:latest # Use :beta for early access to new features
+        container_name: profilarr
+        ports:
+            - 6868:6868
+        volumes:
+            - ~/docker/config_files/profilarr/config:/config # Replace with your actual path
+        environment:
+            - TZ=Asia/Hong_Kong # Set your timezone
+        restart: unless-stopped
+        networks:
+            - proxy
+
+networks:
+  proxy:
+    external: true

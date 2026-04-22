@@ -1,0 +1,17 @@
+services:
+  maintainerr:
+    image: ghcr.io/maintainerr/maintainerr:latest
+    user: 1000:1000
+    volumes:
+      - /mnt:/mnt
+    environment:
+      - TZ=Asia/Hong_Kong
+    ports:
+      - 6246:6246
+    restart: unless-stopped
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true

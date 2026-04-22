@@ -1,0 +1,20 @@
+services:
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    network_mode: host
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Hong_Kong
+      - VERSION=docker
+      - PLEX_CLAIM=
+    #   - NVIDIA_DRIVER_CAPABILITIES=all
+    #   - NVIDIA_VISIBLE_DEVICES=all
+    # runtime: nvidia
+    devices:
+      - /dev/dri:/dev/dri 
+    volumes:
+      - ~/docker/config_files/plex/config:/config
+      - /mnt:/mnt
+    restart: unless-stopped

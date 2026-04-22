@@ -1,0 +1,31 @@
+services:
+  agregarr:
+    image: agregarr/agregarr:latest
+    container_name: agregarr
+    volumes:
+      - ~/docker/config_files/agregarr/config:/app/config # Change /path/to/config to your actual config path
+
+      # Optional: For Coming Soon/Placeholder feature
+      - ~/docker/config_files/agregarr/placeholders/movies:/data/movies
+      - ~/docker/config_files/agregarr/placeholders/tv:/data/tv
+      - ~/docker/config_files/agregarr/placeholders/movies-animation:/data/movies-animation
+      - ~/docker/config_files/agregarr/placeholders/tv-animation:/data/tv-animation
+      # Linux/Mac:
+      # - /mnt/media/movie-placeholders:/data/movies
+      # - /mnt/media/tv-placeholders:/data/tv
+      # Windows:
+      # - E:\media\movie-placeholders:/data/movies
+      # - E:\media\tv-placeholders:/data/tv
+
+      # And then select your root folders in Settings -> Downloads
+    environment:
+      - TZ=Asia/Hong_Kong # Set to your local timezone for accurate poster overlay release dates/countdowns - see 'TZ Identifier' column here https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    ports:
+      - 7171:7171
+    restart: unless-stopped
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true
